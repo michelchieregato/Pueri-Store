@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FormaPagamento" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2d345c89-9a8c-47f8-87af-7d0929410adf">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<parameter name="DataInicial" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DataFinal" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Unidade" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+    Forma_Pagamento,
+    sum(Dinheiro) as Total
+FROM
+    tbformapagamento AS Pagamento
+        JOIN
+    tbvenda AS Venda ON Pagamento.IdVenda = Venda.IdVenda
+WHERE
+	Venda.Dia BETWEEN
+           STR_TO_DATE($P{DataInicial}, "%d/%m/%Y" ) AND
+           STR_TO_DATE($P{DataFinal}, "%d/%m/%Y" )
+AND
+Unidade = $P{Unidade}
+Group by Forma_Pagamento;]]>
+	</queryString>
+	<field name="Forma_Pagamento" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Total" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="Total_1" class="java.lang.Double" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{Total}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="119" y="12" width="318" height="51" uuid="3f5323ba-e19a-4d1e-90f3-4dcb32ca0569"/>
+				<box>
+					<pen lineWidth="1.25" lineStyle="Dashed" lineColor="#FF9900"/>
+					<topPen lineWidth="1.25" lineStyle="Dashed" lineColor="#FF9900"/>
+					<leftPen lineWidth="1.25" lineStyle="Dashed" lineColor="#FF9900"/>
+					<bottomPen lineWidth="1.25" lineStyle="Dashed" lineColor="#FF9900"/>
+					<rightPen lineWidth="1.25" lineStyle="Dashed" lineColor="#FF9900"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[Vendas por Formas de Pagamento]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="57" y="0" width="79" height="20" uuid="fb5e78d8-fc35-46cc-80aa-76ac2cde2047"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Vendas de ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="170" y="0" width="100" height="20" uuid="e6bafdbb-542e-45ae-93a3-e0b473096ae1"/>
+				<textFieldExpression><![CDATA[$P{DataInicial}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="314" y="0" width="100" height="20" uuid="db4b6a3e-e5bf-409f-a2f2-b6ef27e5028c"/>
+				<textFieldExpression><![CDATA[$P{DataFinal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="288" y="0" width="14" height="20" uuid="a50e116c-15f5-4f75-9d8c-f9c47abcacbd"/>
+				<text><![CDATA[à]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="437" y="0" width="100" height="20" uuid="ff726387-5bf6-4431-90cc-1f5295340928"/>
+				<textFieldExpression><![CDATA[$P{Unidade}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="44" splitType="Stretch">
+			<staticText>
+				<reportElement x="57" y="24" width="160" height="20" uuid="bb7873d3-2e92-4de6-98d3-56f0b51fcb48"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Formas de Pagamento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="302" y="24" width="100" height="20" uuid="0d5c63f6-da48-476f-bd7d-556e2f2dc8a9"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement x="57" y="5" width="160" height="20" uuid="e52f4dd8-3c5d-4b08-a2f5-317a79fb680d"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Forma_Pagamento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="324" y="5" width="100" height="20" uuid="5d2ccd2b-1261-4358-b451-3bbb429557af"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Total}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="302" y="5" width="22" height="20" uuid="47d67109-fbc6-4322-81a1-1f2bcac65dcb"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[R$]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="457" splitType="Stretch">
+			<pieChart>
+				<chart>
+					<reportElement x="0" y="83" width="555" height="109" uuid="d0c0ed4d-1657-4e4d-a6af-7729589f90b4"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<keyExpression><![CDATA[$F{Forma_Pagamento}]]></keyExpression>
+					<valueExpression><![CDATA[$F{Total}]]></valueExpression>
+				</pieDataset>
+				<piePlot>
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+			<textField>
+				<reportElement x="324" y="16" width="44" height="20" uuid="91c11765-b630-4576-a344-314633baf1e7"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Total_1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="57" y="16" width="113" height="20" uuid="519db55d-1796-40a3-b402-0aaed8f0d734"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Total :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="302" y="16" width="22" height="20" uuid="729fdf95-89b0-4ccd-86f7-e1abd52cd36a"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[R$]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

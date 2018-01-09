@@ -20,6 +20,10 @@ public class TelaDesconto extends javax.swing.JFrame {
         initComponents();
     }
 
+    private TelaDesconto() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -129,16 +133,17 @@ public class TelaDesconto extends javax.swing.JFrame {
         try {
             desconto = Float.parseFloat(txtDesconto.getText().replaceAll(",", "."));
             if (rdPorcentagem.isSelected()) {
-                if (desconto > 6) {
+                if (desconto > 100) {
                     JOptionPane.showMessageDialog(null, "Insira um valor válido");
                 } else {
-                    valor = (100-desconto)/100*Float.parseFloat(telaPagamento.get_preco());
+                    valor = (float) (Math.ceil((100-desconto)*Float.parseFloat(telaPagamento.get_preco()))/100);
                     this.telaPagamento.da_desconto(Float.toString(valor));
                 }
             } else {
                 valor = Float.parseFloat(telaPagamento.get_preco()) - desconto;
                 this.telaPagamento.da_desconto(Float.toString(valor));
             }
+            this.telaPagamento.limpa_tudo();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Insira um valor válido");
         }
@@ -175,9 +180,7 @@ public class TelaDesconto extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                TelaVenda telavenda = new TelaVenda();
-                TelaPagamento telaPagamento = new TelaPagamento(telavenda, "R$ 00");
-                new TelaDesconto(telaPagamento).setVisible(true);
+                new TelaDesconto().setVisible(true);
             }
         });
     }

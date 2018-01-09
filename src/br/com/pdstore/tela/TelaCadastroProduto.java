@@ -115,14 +115,14 @@ public class TelaCadastroProduto extends javax.swing.JFrame {
             }
         });
 
-        jTipo3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "COLEGIAL", "SUPLEX", "COM FLANELA", "LISO", "UNISEX", "FEMININO" }));
+        jTipo3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "COLEGIAL", "COTTON", "SUPLEX", "COM FLANELA", "LISO", "UNISEX", "FEMININO", "COLEGIAL FEMININO", "COLEGIAL MASCULINO", "COM FLANELA MASCULINO", "COM FLANELA FEMININO", "LISO MASCULINO", "LISO FEMININO" }));
         jTipo3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTipo3ActionPerformed(evt);
             }
         });
 
-        jTipo2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "MC", "ML", "CICLISTA", "CORSARIO", "MOLETOM", "SAIA", "SARJA" }));
+        jTipo2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "MC", "ML", "CICLISTA", "CORSARIO", "MOLETOM", "SAIA", "SARJA", "COLEGIAL" }));
         jTipo2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTipo2ActionPerformed(evt);
@@ -407,7 +407,7 @@ public class TelaCadastroProduto extends javax.swing.JFrame {
         } else if (jTipo2.getSelectedItem().toString().equalsIgnoreCase("SAIA")){
             b = "SAIA";
         } else if (jTipo2.getSelectedItem().toString().equalsIgnoreCase("SARJA")){
-            b = "SHORT"; }
+            b = "SARJA"; }
         
         if (jTipo3.getSelectedItem().toString().equalsIgnoreCase("COLEGIAL")){
             c = "COL";
@@ -421,7 +421,21 @@ public class TelaCadastroProduto extends javax.swing.JFrame {
             c = "UNISEX";
         } else if (jTipo3.getSelectedItem().toString().equalsIgnoreCase("FEMININO")){
             c = "FEM";
-        }
+        } else if (jTipo3.getSelectedItem().toString().equalsIgnoreCase("COLEGIAL FEMININO")){
+            c = "COL FEM";
+        } else if (jTipo3.getSelectedItem().toString().equalsIgnoreCase("COLEGIAL MASCULINO")){
+            c = "COL MASC";
+        } else if (jTipo3.getSelectedItem().toString().equalsIgnoreCase("COM FLANELA MASCULINO")){
+            c = "FLAN MASC";
+        } else if (jTipo3.getSelectedItem().toString().equalsIgnoreCase("COM FLANELA FEMININO")){
+            c = "FLAN FEM";
+        }  else if (jTipo3.getSelectedItem().toString().equalsIgnoreCase("LISO FEMININO")){
+            c = "LISO FEM";
+        } else if (jTipo3.getSelectedItem().toString().equalsIgnoreCase("LISO MASCULINO")){
+            c = "LISO MASC";
+        } else if (jTipo3.getSelectedItem().toString().equalsIgnoreCase("COTTON")){
+            c = "COT";
+        } 
         jSigla.setText(a + ' ' + b + ' ' + c);
         
     }
@@ -450,7 +464,7 @@ public class TelaCadastroProduto extends javax.swing.JFrame {
                 }
                     
                 if (adicionado > 0){
-                    JOptionPane.showMessageDialog(null, "Usuário adicionado com sucesso");
+                    JOptionPane.showMessageDialog(null, "Produto adicionado com sucesso");
                     jDescricao.setText(null);
                     jSigla.setText(null);
                     jPrecoCusto.setText(null);

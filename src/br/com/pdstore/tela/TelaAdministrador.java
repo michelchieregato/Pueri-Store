@@ -13,11 +13,19 @@ import javax.swing.JOptionPane;
  */
 public class TelaAdministrador extends javax.swing.JFrame {
     public int unidade;
+    public String vendedor;
+    boolean administrador;
     /**
      * Creates new form TelaAdministrador
      */
-    public TelaAdministrador() {
+    public TelaAdministrador(String vendedor, boolean administrador) {
+        this.vendedor = vendedor;
+        this.administrador = administrador;
         initComponents();
+    }
+
+    private TelaAdministrador() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**
@@ -29,6 +37,9 @@ public class TelaAdministrador extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        bTransfere = new javax.swing.JButton();
+        bVende = new javax.swing.JButton();
+        bCaixa = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -38,8 +49,32 @@ public class TelaAdministrador extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pdstore/imagem/Vendas.png"))); // NOI18N
-        jButton1.setText(" Efetuar Venda");
+        bTransfere.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pdstore/imagem/transicao.png"))); // NOI18N
+        bTransfere.setText(" Transferir Estoque");
+        bTransfere.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bTransfereActionPerformed(evt);
+            }
+        });
+
+        bVende.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pdstore/imagem/Vendas.png"))); // NOI18N
+        bVende.setText(" Efetuar Venda");
+        bVende.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bVendeActionPerformed(evt);
+            }
+        });
+
+        bCaixa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pdstore/imagem/money.png"))); // NOI18N
+        bCaixa.setText(" Caixa / Sangria");
+        bCaixa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bCaixaActionPerformed(evt);
+            }
+        });
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pdstore/imagem/search.png"))); // NOI18N
+        jButton1.setText(" Pesquisar  Venda");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -73,16 +108,28 @@ public class TelaAdministrador extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton1)
-                .addContainerGap(367, Short.MAX_VALUE))
+                .addGap(65, 65, 65)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(bVende)
+                    .addComponent(bCaixa))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 128, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(bTransfere, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(59, 59, 59))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(jButton1)
-                .addContainerGap(263, Short.MAX_VALUE))
+                .addGap(57, 57, 57)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bTransfere)
+                    .addComponent(bVende))
+                .addGap(78, 78, 78)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bCaixa)
+                    .addComponent(jButton1))
+                .addContainerGap(123, Short.MAX_VALUE))
         );
 
         pack();
@@ -90,15 +137,31 @@ public class TelaAdministrador extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        TelaInicial telaInicial = new TelaInicial();
+        TelaInicial telaInicial = new TelaInicial(this.vendedor);
         telaInicial.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        TelaVenda telaVenda = new TelaVenda();
+    private void bTransfereActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bTransfereActionPerformed
+        TelaTransfereEstoque telaTransfere = new TelaTransfereEstoque(this.vendedor, unidade);
+        telaTransfere.setVisible(true);
+        
+    }//GEN-LAST:event_bTransfereActionPerformed
+
+    private void bVendeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bVendeActionPerformed
+        TelaVenda telaVenda = new TelaVenda(this.vendedor);
         telaVenda.unidade = unidade;
         telaVenda.setVisible(true);
+    }//GEN-LAST:event_bVendeActionPerformed
+
+    private void bCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCaixaActionPerformed
+        TelaCaixa telaCaixa = new TelaCaixa(vendedor, unidade);
+        telaCaixa.setVisible(true);
+    }//GEN-LAST:event_bCaixaActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        TelaConsultaVenda telaConsulta = new TelaConsultaVenda(this.unidade, this.administrador);
+        telaConsulta.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -137,6 +200,9 @@ public class TelaAdministrador extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bCaixa;
+    private javax.swing.JButton bTransfere;
+    private javax.swing.JButton bVende;
     private javax.swing.JButton jButton1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;

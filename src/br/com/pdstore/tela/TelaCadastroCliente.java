@@ -44,6 +44,12 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
         JCpf = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jTelefone = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jCEP = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jEndereco = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jComplemento = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -59,7 +65,7 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setText("CPF");
+        jLabel4.setText("CPF*");
 
         JCpf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -71,6 +77,30 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setText("CEP*");
+
+        jCEP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCEPActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setText("Endereço*");
+
+        jEndereco.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jEnderecoActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setText("Complemento");
+
+        jComplemento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComplementoActionPerformed(evt);
             }
         });
 
@@ -87,14 +117,20 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton1))
+                    .addComponent(jTelefone)
+                    .addComponent(jCEP, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jEndereco)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3)
-                            .addComponent(jLabel4))
-                        .addGap(0, 351, Short.MAX_VALUE))
-                    .addComponent(jTelefone))
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7))
+                        .addGap(0, 766, Short.MAX_VALUE))
+                    .addComponent(jComplemento))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -116,9 +152,21 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(JCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jCEP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jComplemento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                 .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -137,10 +185,22 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
         adicionar();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jCEPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCEPActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCEPActionPerformed
+
+    private void jEnderecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jEnderecoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jEnderecoActionPerformed
+
+    private void jComplementoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComplementoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComplementoActionPerformed
+
     private void adicionar(){
-       String sql = "insert into tbcliente (Nome, Telefone, Email, Cpf) values (?,?,?,?)";
+       String sql = "insert into tbcliente (Nome, Telefone, Email, Cpf, CEP, Endereco, Complemento) values (?,?,?,?,?,?,?)";
         try {
-            if (jNome.getText().isEmpty() || jTelefone.getText().isEmpty()){
+            if (jNome.getText().isEmpty() || jTelefone.getText().isEmpty() || JCpf.getText().isEmpty() || jCEP.getText().isEmpty() || jEndereco.getText().isEmpty()){
                 JOptionPane.showMessageDialog(null, "Preencha os campos obrigatórios (*)");
             } else{
                 pst=conexao.prepareStatement(sql);
@@ -148,6 +208,9 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
                 pst.setString(2, jTelefone.getText());
                 pst.setString(3, JEmail.getText());
                 pst.setString(4, JCpf.getText());
+                pst.setString(5, jCEP.getText());
+                pst.setString(6, jEndereco.getText());
+                pst.setString(7, jComplemento.getText());
                 int aux = pst.executeUpdate();
                 if (aux>0){
                     JOptionPane.showMessageDialog(null, "Cliente adicionado com sucesso");
@@ -198,10 +261,16 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
     private javax.swing.JTextField JCpf;
     private javax.swing.JTextField JEmail;
     private javax.swing.JButton jButton1;
+    private javax.swing.JTextField jCEP;
+    private javax.swing.JTextField jComplemento;
+    private javax.swing.JTextField jEndereco;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JTextField jNome;
     private javax.swing.JTextField jTelefone;
     // End of variables declaration//GEN-END:variables

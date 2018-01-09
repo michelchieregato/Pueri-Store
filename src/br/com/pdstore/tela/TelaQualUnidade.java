@@ -12,12 +12,19 @@ import javax.swing.JOptionPane;
  * @author Michel
  */
 public class TelaQualUnidade extends javax.swing.JFrame {
-
+    public String vendedor;
+    boolean administrador;
     /**
      * Creates new form TelaQualUnidade
      */
-    public TelaQualUnidade() {
+    public TelaQualUnidade(String vendedor, boolean administrador) {
+        this.vendedor = vendedor;
+        this.administrador = administrador;
         initComponents();
+    }
+
+    private TelaQualUnidade() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**
@@ -91,7 +98,7 @@ public class TelaQualUnidade extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        TelaAdministrador telaAdministrador = new TelaAdministrador();
+        TelaAdministrador telaAdministrador = new TelaAdministrador(this.vendedor, this.administrador);
         telaAdministrador.unidade = slctUnidade.getSelectedIndex();
         telaAdministrador.setVisible(true);
         this.dispose();

@@ -9,6 +9,7 @@ import java.sql.*;
 import br.com.pdstore.dal.Conexao;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import org.apache.hadoop.hive.ql.parse.HiveParser;
 
 /**
  *
@@ -21,13 +22,21 @@ public class TelaCaixa extends javax.swing.JFrame {
     ResultSet rs = null;
     float valor = 0;
     float resultado = 0;
+    String vendedor;
+    int unidade;
 
     /**
      * Creates new form TelaCaixa
      */
-    public TelaCaixa() {
+    public TelaCaixa(String vendedor, int unidade) {
+        this.vendedor = vendedor;
+        this.unidade = unidade;
         initComponents();
         conexao = Conexao.conector();
+    }
+
+    private TelaCaixa() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**
@@ -60,9 +69,7 @@ public class TelaCaixa extends javax.swing.JFrame {
         txtAdicionar2 = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         txtResultado2 = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        txtLogin = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
+        btnSangria = new javax.swing.JButton();
 
         jTextField1.setText("jTextField1");
 
@@ -165,9 +172,9 @@ public class TelaCaixa extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(30, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(slctDinheiro)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(slctDinheiro, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(slctCheque))
                 .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -220,9 +227,14 @@ public class TelaCaixa extends javax.swing.JFrame {
         });
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel4.setText("Adicionar:");
+        jLabel4.setText("Retirar");
 
         txtAdicionar2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtAdicionar2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtAdicionar2ActionPerformed(evt);
+            }
+        });
         txtAdicionar2.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtAdicionar2KeyReleased(evt);
@@ -243,44 +255,45 @@ public class TelaCaixa extends javax.swing.JFrame {
             }
         });
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel7.setText("Usuario");
-
-        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel8.setText("Senha");
+        btnSangria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pdstore/imagem/sangria.png"))); // NOI18N
+        btnSangria.setToolTipText("");
+        btnSangria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSangriaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(slctDinheiro2, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 147, Short.MAX_VALUE)
-                .addComponent(slctCheque2, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(106, 106, 106))
-            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(34, 34, 34)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(jLabel4)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtAdicionar2, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(jLabel3)
-                            .addGap(35, 35, 35)
-                            .addComponent(txtValor2, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel6)
-                                .addComponent(jLabel7))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtResultado2, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtAdicionar2, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(35, 35, 35)
+                        .addComponent(txtValor2, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtResultado2, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSangria, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(slctDinheiro2, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 147, Short.MAX_VALUE)
+                        .addComponent(slctCheque2, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(106, 106, 106))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -302,12 +315,8 @@ public class TelaCaixa extends javax.swing.JFrame {
                     .addComponent(jLabel6)
                     .addComponent(txtResultado2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel8)
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addComponent(btnSangria)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Sangria", jPanel2);
@@ -316,13 +325,16 @@ public class TelaCaixa extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 472, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -338,6 +350,7 @@ public class TelaCaixa extends javax.swing.JFrame {
     }//GEN-LAST:event_txtResultadoActionPerformed
 
     private void slctChequeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_slctChequeActionPerformed
+        zera_tudo();
         slctDinheiro.setSelected(false);
         seta_valor_adiciona(2);
         resultado = valor;
@@ -346,11 +359,12 @@ public class TelaCaixa extends javax.swing.JFrame {
     }//GEN-LAST:event_slctChequeActionPerformed
 
     private void slctDinheiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_slctDinheiroActionPerformed
+        zera_tudo();
         slctCheque.setSelected(false);
         seta_valor_adiciona(1);
         resultado = valor;
         txtResultado.setText("R$ " + Float.toString(resultado));
-        faz_soma(txtAdicionar,txtResultado);
+        faz_soma(txtAdicionar, txtResultado);
     }//GEN-LAST:event_slctDinheiroActionPerformed
 
     private void txtAdicionarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAdicionarKeyTyped
@@ -362,10 +376,11 @@ public class TelaCaixa extends javax.swing.JFrame {
     }//GEN-LAST:event_txtAdicionarKeyReleased
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        adiciona();
+        adiciona(slctDinheiro.isSelected());
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void slctDinheiro2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_slctDinheiro2ActionPerformed
+        zera_tudo();
         slctCheque2.setSelected(false);
         seta_valor_adiciona(1);
         resultado = valor;
@@ -374,6 +389,7 @@ public class TelaCaixa extends javax.swing.JFrame {
     }//GEN-LAST:event_slctDinheiro2ActionPerformed
 
     private void slctCheque2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_slctCheque2ActionPerformed
+        zera_tudo();
         slctDinheiro2.setSelected(false);
         seta_valor_adiciona(2);
         resultado = valor;
@@ -386,7 +402,7 @@ public class TelaCaixa extends javax.swing.JFrame {
     }//GEN-LAST:event_txtValor2ActionPerformed
 
     private void txtAdicionar2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAdicionar2KeyReleased
-        faz_soma(txtAdicionar2,txtResultado2);
+        faz_subtracao(txtAdicionar2,txtResultado2);
     }//GEN-LAST:event_txtAdicionar2KeyReleased
 
     private void txtAdicionar2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAdicionar2KeyTyped
@@ -398,24 +414,30 @@ public class TelaCaixa extends javax.swing.JFrame {
     }//GEN-LAST:event_txtResultado2ActionPerformed
 
     private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
-        valor = 0;
-        resultado = 0;
-        txtAdicionar.setText(null);
-        txtValor.setText(null);
-        txtResultado.setText(null);
-        txtAdicionar2.setText(null);
-        txtValor2.setText(null);
-        txtResultado2.setText(null);
+        zera_tudo();
         slctCheque.setSelected(false);
         slctCheque2.setSelected(false);
         slctDinheiro.setSelected(false);
         slctDinheiro2.setSelected(false);
     }//GEN-LAST:event_jTabbedPane1MouseClicked
 
+    private void txtAdicionar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAdicionar2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtAdicionar2ActionPerformed
+
+    private void btnSangriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSangriaActionPerformed
+        if (slctDinheiro2.isSelected()){
+            faz_sangria(txtAdicionar2.getText(), 1);}
+        else if (slctCheque2.isSelected())
+            faz_sangria(txtAdicionar2.getText(), 2);
+        adiciona(slctDinheiro2.isSelected());
+        
+    }//GEN-LAST:event_btnSangriaActionPerformed
+
     private void seta_valor_adiciona(int aux) {
         String sql;
         try {
-            sql = "select * from tbCaixa where Id=1";
+            sql = "select * from tbcaixa where Id=" + this.unidade;
             pst = conexao.prepareStatement(sql);
             rs = pst.executeQuery();
             if (rs.next()) {
@@ -432,12 +454,12 @@ public class TelaCaixa extends javax.swing.JFrame {
         }
     }
 
-    private void adiciona() {
+    private void adiciona(boolean dinheiro) {
         String sql;
         try {
-            if (slctDinheiro.isSelected()) {
-                if (resultado > 0) {
-                    sql = "update tbCaixa set Dinheiro =" + resultado + " where Id = 1";
+            if (dinheiro) {
+                if (resultado >= 0) {
+                    sql = "update tbcaixa set Dinheiro =" + resultado + " where Id = " + this.unidade;
                     pst.executeUpdate(sql);
                     txtAdicionar.setText(null);
                     seta_valor_adiciona(1);
@@ -445,17 +467,15 @@ public class TelaCaixa extends javax.swing.JFrame {
                 } else {
                     JOptionPane.showMessageDialog(null, "Digite um valor valido");
                 }
-            } else if (slctCheque.isSelected()) {
-                if (resultado > 0) {
-                    sql = "update tbCaixa set Cheque =" + resultado + " where Id = 1";
+            } else {
+                if (resultado >= 0) {
+                    sql = "update tbcaixa set Cheque =" + resultado + " where Id = " + this.unidade;
                     pst.executeUpdate(sql);
                     seta_valor_adiciona(2);
                     JOptionPane.showMessageDialog(null, "Valor adicionado");
                 } else {
                     JOptionPane.showMessageDialog(null, "Digite um valor valido");
                 }
-            } else {
-                JOptionPane.showMessageDialog(null, "Selecione uma das opções");
             }
 
         } catch (Exception e) {
@@ -474,6 +494,66 @@ public class TelaCaixa extends javax.swing.JFrame {
             resultado = valor + adicionar;
             resultadoTxt.setText("R$ " + Float.toString(valor + adicionar));
         } catch (Exception e) {
+        }
+    }
+    
+    private void faz_subtracao(JTextField adicionaTxt, JTextField resultadoTxt) {
+        float adicionar = 0;
+        try {
+            if (adicionaTxt.getText().isEmpty()) {
+                adicionar = 0;
+            } else if (Float.parseFloat(adicionaTxt.getText()) > 0) {
+                adicionar = Float.parseFloat(adicionaTxt.getText());
+            }
+            resultado = valor - adicionar;
+            if (resultado < 0 )
+                resultado = 0;
+            resultadoTxt.setText("R$ " + Float.toString(resultado));
+        } catch (Exception e) {
+        }
+    }
+    
+    private void faz_sangria(String valor, int aux) {
+        String sql = "";
+        if (aux == 1){
+            sql = "INSERT INTO tbsangria (Dinheiro, Usuario, Unidade) VALUES (?,?,?)";}
+        else{
+            sql = "INSERT INTO tbsangria (Cheque, Usuario, Unidade) VALUES (?,?,?)";
+        }
+        try {
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1, valor);
+            pst.setString(2, this.vendedor);
+            pst.setString(3, adicionaUnidade(unidade));            
+            pst.executeUpdate();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+    
+    private void zera_tudo() {
+        valor = 0;
+        resultado = 0;
+        txtAdicionar.setText(null);
+        txtValor.setText(null);
+        txtResultado.setText(null);
+        txtAdicionar2.setText(null);
+        txtValor2.setText(null);
+        txtResultado2.setText(null);
+    }
+    
+    private String adicionaUnidade(int unidade){
+        switch(unidade) {
+            case 0:
+                return "Verbo Divino";
+            case 1:
+                return "Aldeia da Serra";
+            case 2: 
+                return "Aclimação";
+            case 3:
+                return "Itaim";
+            default:
+                return "Verbo Divino";
         }
     }
 
@@ -513,6 +593,7 @@ public class TelaCaixa extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnSangria;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -520,8 +601,6 @@ public class TelaCaixa extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTabbedPane jTabbedPane1;
@@ -532,7 +611,6 @@ public class TelaCaixa extends javax.swing.JFrame {
     private javax.swing.JCheckBox slctDinheiro2;
     private javax.swing.JTextField txtAdicionar;
     private javax.swing.JTextField txtAdicionar2;
-    private javax.swing.JTextField txtLogin;
     private javax.swing.JTextField txtResultado;
     private javax.swing.JTextField txtResultado2;
     private javax.swing.JTextField txtValor;

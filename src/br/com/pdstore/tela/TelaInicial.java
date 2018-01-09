@@ -12,13 +12,17 @@ import javax.swing.JOptionPane;
  * @author Michel
  */
 public class TelaInicial extends javax.swing.JFrame {
-    
-
+    public String vendedor;
     /**
      * Creates new form TelaInicial
      */
-    public TelaInicial() {
+    public TelaInicial(String vendedor) {
+        this.vendedor = vendedor;
         initComponents();
+    }
+
+    private TelaInicial() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**
@@ -77,7 +81,7 @@ public class TelaInicial extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendaActionPerformed
-       TelaQualUnidade telaQualUnidade = new TelaQualUnidade();
+       TelaQualUnidade telaQualUnidade = new TelaQualUnidade(this.vendedor, true);
        telaQualUnidade.setVisible(true);
        //TelaAdministrador telaAdministrador = new TelaAdministrador();
        this.dispose();
@@ -91,7 +95,7 @@ public class TelaInicial extends javax.swing.JFrame {
             } catch (Exception e){
                 JOptionPane.showMessageDialog(null, e);
             }*/
-            TelaGerente telaGerente = new TelaGerente();
+            TelaGerente telaGerente = new TelaGerente(this.vendedor);
             telaGerente.setVisible(true);
 
             

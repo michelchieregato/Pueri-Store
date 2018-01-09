@@ -11,12 +11,19 @@ package br.com.pdstore.tela;
  * @author Michel
  */
 public class TelaGerente extends javax.swing.JFrame {
+    
+    public String vendedor;
 
     /**
      * Creates new form TelaGerente
      */
-    public TelaGerente() {
+    public TelaGerente(String vendedor) {
+        this.vendedor = vendedor;
         initComponents();
+    }
+
+    private TelaGerente() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**
@@ -145,7 +152,7 @@ public class TelaGerente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        TelaInicial telaInicial = new TelaInicial();
+        TelaInicial telaInicial = new TelaInicial(this.vendedor);
         telaInicial.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jMenuItem1ActionPerformed

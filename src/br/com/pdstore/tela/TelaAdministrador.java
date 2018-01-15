@@ -6,6 +6,7 @@
 package br.com.pdstore.tela;
 
 import javax.swing.JOptionPane;
+import net.miginfocom.swt.MigLayout;
 
 /**
  *
@@ -150,6 +151,8 @@ public class TelaAdministrador extends javax.swing.JFrame {
 
     private void bVendeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bVendeActionPerformed
         TelaVenda telaVenda = new TelaVenda(this.vendedor);
+        //telaVenda.setLayout(new MigLayout("fill"));
+        //telaVenda.pack();
         telaVenda.unidade = unidade;
         telaVenda.setVisible(true);
     }//GEN-LAST:event_bVendeActionPerformed
